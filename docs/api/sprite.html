@@ -206,11 +206,6 @@
               <h3 id="properties">Properties</h3>
               <ul aria-labelledby="properties">
                 <li>
-                  <a href="api/sprite#acceleration">
-                    <span>Sprite&#8203;.acceleration</span>
-                  </a>
-                </li>
-                <li>
                   <a href="api/sprite#anchor">
                     <span>Sprite&#8203;.anchor</span>
                   </a>
@@ -228,31 +223,6 @@
                 <li>
                   <a href="api/sprite#context">
                     <span>Sprite&#8203;.context</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#currentAnimation">
-                    <span>Sprite&#8203;.currentAnimation</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#ddx">
-                    <span>Sprite&#8203;.ddx</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#ddy">
-                    <span>Sprite&#8203;.ddy</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#dx">
-                    <span>Sprite&#8203;.dx</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#dy">
-                    <span>Sprite&#8203;.dy</span>
                   </a>
                 </li>
                 <li>
@@ -291,11 +261,6 @@
                   </a>
                 </li>
                 <li>
-                  <a href="api/sprite#velocity">
-                    <span>Sprite&#8203;.velocity</span>
-                  </a>
-                </li>
-                <li>
                   <a href="api/sprite#viewX">
                     <span>Sprite&#8203;.viewX</span>
                   </a>
@@ -327,16 +292,6 @@
               <h3 id="methods">Methods</h3>
               <ul aria-labelledby="methods">
                 <li>
-                  <a href="api/sprite#advance">
-                    <span>Sprite&#8203;.advance(&#8203;[dt])</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#collidesWith">
-                    <span>Sprite&#8203;.collidesWith(&#8203;object)</span>
-                  </a>
-                </li>
-                <li>
                   <a href="api/sprite#draw">
                     <span>Sprite&#8203;.draw(&#8203;)</span>
                   </a>
@@ -344,16 +299,6 @@
                 <li>
                   <a href="api/sprite#init">
                     <span>Sprite&#8203;.init(&#8203;properties)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#isAlive">
-                    <span>Sprite&#8203;.isAlive(&#8203;)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="api/sprite#playAnimation">
-                    <span>Sprite&#8203;.playAnimation(&#8203;name)</span>
                   </a>
                 </li>
                 <li>
@@ -960,124 +905,6 @@ class CustomSprite extends Sprite.class {
         </section>
 
         <section>
-          <h2 id="acceleration">
-            <a href="api/sprite#acceleration" class="section-link">
-              <span>Sprite&#8203;.acceleration</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>The sprites acceleration vector.</p>
-          
-        </section>
-        <section>
-          <h2 id="advance">
-            <a href="api/sprite#advance" class="section-link">
-              <span>Sprite&#8203;.advance(&#8203;[dt])</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>Move the sprite by its acceleration and velocity. If the sprite is an <a href="api/sprite/#animation-sprite">animation sprite</a>, it also advances the animation every frame.</p>
-<p>If you override the sprites <a href="api/sprite/#update">update()</a> function with your own update function, you can call this function to move the sprite normally.</p>
-<div class="tablist">
-  <ul role="tablist">
-    <li role="presentation" data-tab="global">
-      <button role="tab" id="advance-global-tab">Global Object</button>
-    </li>
-    <li role="presentation" data-tab="es">
-      <button role="tab" id="advance-es-tab">ES Module Import</button>
-    </li>
-    <li role="presentation" data-tab="bundle">
-      <button role="tab" id="advance-bundle-tab">Module Bundler</button>
-    </li>
-    <li role="presentation"></li>
-  </ul>
-  <section role="tabpanel" aria-labelledby=advance-global-tab data-tabpanel="global"><pre><code class="language-js">let { Sprite } = kontra;
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  width: 20,
-  height: 40,
-  dx: 5,
-  dy: 2,
-  update: function() {
-    // move the sprite normally
-    sprite.advance();
-
-    // change the velocity at the edges of the canvas
-    if (this.x &lt; 0 ||
-        this.x + this.width &gt; this.context.canvas.width) {
-      this.dx = -this.dx;
-    }
-    if (this.y &lt; 0 ||
-        this.y + this.height &gt; this.context.canvas.height) {
-      this.dy = -this.dy;
-    }
-  }
-});</code></pre></section>
-  <section role="tabpanel" aria-labelledby=advance-es-tab data-tabpanel="es"><pre><code class="language-js">import { Sprite } from 'path/to/kontra.mjs';
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  width: 20,
-  height: 40,
-  dx: 5,
-  dy: 2,
-  update: function() {
-    // move the sprite normally
-    sprite.advance();
-
-    // change the velocity at the edges of the canvas
-    if (this.x &lt; 0 ||
-        this.x + this.width &gt; this.context.canvas.width) {
-      this.dx = -this.dx;
-    }
-    if (this.y &lt; 0 ||
-        this.y + this.height &gt; this.context.canvas.height) {
-      this.dy = -this.dy;
-    }
-  }
-});</code></pre></section>
-  <section role="tabpanel" aria-labelledby=advance-bundle-tab data-tabpanel="bundle"><pre><code class="language-js">import { Sprite } from &#39;kontra&#39;;
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  width: 20,
-  height: 40,
-  dx: 5,
-  dy: 2,
-  update: function() {
-    // move the sprite normally
-    sprite.advance();
-
-    // change the velocity at the edges of the canvas
-    if (this.x &lt; 0 ||
-        this.x + this.width &gt; this.context.canvas.width) {
-      this.dx = -this.dx;
-    }
-    if (this.y &lt; 0 ||
-        this.y + this.height &gt; this.context.canvas.height) {
-      this.dy = -this.dy;
-    }
-  }
-});</code></pre></section>
-</div>
-          <h3 id="title-advance"><span class="visually-hidden">advance</span> Parameters</span></h3>
-          <dl aria-labelledby="title-advance">
-            <dt>
-              <code>dt</code>
-              <span class="optional">Optional</span>
-            </dt>
-            <dd><p>Number. Time since last update.</p>
-          </dd>
-          </dl>
-          
-        </section>
-        <section>
           <h2 id="anchor">
             <a href="api/sprite#anchor" class="section-link">
               <span>Sprite&#8203;.anchor</span>
@@ -1321,194 +1148,6 @@ sprite.playAnimation(&#39;idle&#39;);</code></pre></section>
           
         </section>
         <section>
-          <h2 id="collidesWith">
-            <a href="api/sprite#collidesWith" class="section-link">
-              <span>Sprite&#8203;.collidesWith(&#8203;object)</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>Check if the sprite collide with the object. Uses a simple <a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#Axis-Aligned_Bounding_Box">Axis-Aligned Bounding Box (AABB) collision check</a>. Takes into account the sprites <a href="api/sprite/#anchor">anchor</a>.</p>
-<p><strong>NOTE:</strong> Does not take into account sprite rotation. If you need collision detection between rotated sprites you will need to implement your own <code>collidesWith()</code> function. I suggest looking at the Separate Axis Theorem.</p>
-<div class="tablist">
-  <ul role="tablist">
-    <li role="presentation" data-tab="global">
-      <button role="tab" id="collideswith-global-tab">Global Object</button>
-    </li>
-    <li role="presentation" data-tab="es">
-      <button role="tab" id="collideswith-es-tab">ES Module Import</button>
-    </li>
-    <li role="presentation" data-tab="bundle">
-      <button role="tab" id="collideswith-bundle-tab">Module Bundler</button>
-    </li>
-    <li role="presentation"></li>
-  </ul>
-  <section role="tabpanel" aria-labelledby=collideswith-global-tab data-tabpanel="global"><pre><code class="language-js">let { Sprite } = kontra;
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  width: 20,
-  height: 40
-});
-
-let sprite2 = Sprite({
-  x: 150,
-  y: 200,
-  width: 20,
-  height: 20
-});
-
-sprite.collidesWith(sprite2);  //=&gt; false
-
-sprite2.x = 115;
-
-sprite.collidesWith(sprite2);  //=&gt; true</code></pre></section>
-  <section role="tabpanel" aria-labelledby=collideswith-es-tab data-tabpanel="es"><pre><code class="language-js">import { Sprite } from 'path/to/kontra.mjs';
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  width: 20,
-  height: 40
-});
-
-let sprite2 = Sprite({
-  x: 150,
-  y: 200,
-  width: 20,
-  height: 20
-});
-
-sprite.collidesWith(sprite2);  //=&gt; false
-
-sprite2.x = 115;
-
-sprite.collidesWith(sprite2);  //=&gt; true</code></pre></section>
-  <section role="tabpanel" aria-labelledby=collideswith-bundle-tab data-tabpanel="bundle"><pre><code class="language-js">import { Sprite } from &#39;kontra&#39;;
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  width: 20,
-  height: 40
-});
-
-let sprite2 = Sprite({
-  x: 150,
-  y: 200,
-  width: 20,
-  height: 20
-});
-
-sprite.collidesWith(sprite2);  //=&gt; false
-
-sprite2.x = 115;
-
-sprite.collidesWith(sprite2);  //=&gt; true</code></pre></section>
-</div>
-<p>If you need a different type of collision check, you can override this function by passing an argument by the same name.</p>
-<div class="tablist">
-  <ul role="tablist">
-    <li role="presentation" data-tab="global">
-      <button role="tab" id="collideswith-global-tab">Global Object</button>
-    </li>
-    <li role="presentation" data-tab="es">
-      <button role="tab" id="collideswith-es-tab">ES Module Import</button>
-    </li>
-    <li role="presentation" data-tab="bundle">
-      <button role="tab" id="collideswith-bundle-tab">Module Bundler</button>
-    </li>
-    <li role="presentation"></li>
-  </ul>
-  <section role="tabpanel" aria-labelledby=collideswith-global-tab data-tabpanel="global"><pre><code class="language-js">// circle collision
-function collidesWith(object) {
-  let dx = this.x - object.x;
-  let dy = this.y - object.y;
-  let distance = Math.sqrt(dx * dx + dy * dy);
-
-  return distance &lt; this.radius + object.radius;
-}
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  radius: 25,
-  collidesWith: collidesWith
-});
-
-let sprite2 = Sprite({
-  x: 150,
-  y: 200,
-  radius: 30,
-  collidesWith: collidesWith
-});
-
-sprite.collidesWith(sprite2);  //=&gt; true</code></pre></section>
-  <section role="tabpanel" aria-labelledby=collideswith-es-tab data-tabpanel="es"><pre><code class="language-js">// circle collision
-function collidesWith(object) {
-  let dx = this.x - object.x;
-  let dy = this.y - object.y;
-  let distance = Math.sqrt(dx * dx + dy * dy);
-
-  return distance &lt; this.radius + object.radius;
-}
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  radius: 25,
-  collidesWith: collidesWith
-});
-
-let sprite2 = Sprite({
-  x: 150,
-  y: 200,
-  radius: 30,
-  collidesWith: collidesWith
-});
-
-sprite.collidesWith(sprite2);  //=&gt; true</code></pre></section>
-  <section role="tabpanel" aria-labelledby=collideswith-bundle-tab data-tabpanel="bundle"><pre><code class="language-js">// circle collision
-function collidesWith(object) {
-  let dx = this.x - object.x;
-  let dy = this.y - object.y;
-  let distance = Math.sqrt(dx * dx + dy * dy);
-
-  return distance &lt; this.radius + object.radius;
-}
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  radius: 25,
-  collidesWith: collidesWith
-});
-
-let sprite2 = Sprite({
-  x: 150,
-  y: 200,
-  radius: 30,
-  collidesWith: collidesWith
-});
-
-sprite.collidesWith(sprite2);  //=&gt; true</code></pre></section>
-</div>
-          <h3 id="title-collidesWith"><span class="visually-hidden">collidesWith</span> Parameters</span></h3>
-          <dl aria-labelledby="title-collidesWith">
-            <dt>
-              <code>object</code>
-              
-            </dt>
-            <dd><p>Object. Object to check collision against.</p>
-          </dd>
-          </dl>
-          
-          <h3><span class="visually-hidden">collidesWith</span> Return value</h3>
-          <p><p><code>true</code> if the objects collide, <code>false</code> otherwise. Will return <code>null</code> if the either of the two objects are rotated.</p>
-          </p>
-        </section>
-        <section>
           <h2 id="color">
             <a href="api/sprite#color" class="section-link">
               <span>Sprite&#8203;.color</span>
@@ -1528,39 +1167,6 @@ sprite.collidesWith(sprite2);  //=&gt; true</code></pre></section>
           </h2>
 
           <p>The context the sprite will draw to.</p>
-          
-        </section>
-        <section>
-          <h2 id="currentAnimation">
-            <a href="api/sprite#currentAnimation" class="section-link">
-              <span>Sprite&#8203;.currentAnimation</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>The currently playing Animation object if <code>animations</code> was passed as an argument.</p>
-          
-        </section>
-        <section>
-          <h2 id="ddx">
-            <a href="api/sprite#ddx" class="section-link">
-              <span>Sprite&#8203;.ddx</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>X coordinate of the acceleration vector.</p>
-          
-        </section>
-        <section>
-          <h2 id="ddy">
-            <a href="api/sprite#ddy" class="section-link">
-              <span>Sprite&#8203;.ddy</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>Y coordinate of the acceleration vector.</p>
           
         </section>
         <section>
@@ -1653,28 +1259,6 @@ sprite.render();</code></pre></section>
           
         </section>
         <section>
-          <h2 id="dx">
-            <a href="api/sprite#dx" class="section-link">
-              <span>Sprite&#8203;.dx</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>X coordinate of the velocity vector.</p>
-          
-        </section>
-        <section>
-          <h2 id="dy">
-            <a href="api/sprite#dy" class="section-link">
-              <span>Sprite&#8203;.dy</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>Y coordinate of the velocity vector.</p>
-          
-        </section>
-        <section>
           <h2 id="height">
             <a href="api/sprite#height" class="section-link">
               <span>Sprite&#8203;.height</span>
@@ -1713,117 +1297,6 @@ sprite.render();</code></pre></section>
               
             </dt>
             <dd><p>Object. Properties of the sprite.</p>
-          </dd>
-          </dl>
-          
-        </section>
-        <section>
-          <h2 id="isAlive">
-            <a href="api/sprite#isAlive" class="section-link">
-              <span>Sprite&#8203;.isAlive(&#8203;)</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>Check if the sprite is alive. Primarily used by <a href="api/pool">Pool</a> to know when to recycle an object.</p>
-          
-          <h3><span class="visually-hidden">isAlive</span> Return value</h3>
-          <p><p><code>true</code> if the sprites <a href="api/sprite/#ttl">ttl</a> property is above <code>0</code>, <code>false</code> otherwise.</p>
-          </p>
-        </section>
-        <section>
-          <h2 id="playAnimation">
-            <a href="api/sprite#playAnimation" class="section-link">
-              <span>Sprite&#8203;.playAnimation(&#8203;name)</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>Set the currently playing animation of an animation sprite.</p>
-<div class="tablist">
-  <ul role="tablist">
-    <li role="presentation" data-tab="global">
-      <button role="tab" id="playanimation-global-tab">Global Object</button>
-    </li>
-    <li role="presentation" data-tab="es">
-      <button role="tab" id="playanimation-es-tab">ES Module Import</button>
-    </li>
-    <li role="presentation" data-tab="bundle">
-      <button role="tab" id="playanimation-bundle-tab">Module Bundler</button>
-    </li>
-    <li role="presentation"></li>
-  </ul>
-  <section role="tabpanel" aria-labelledby=playanimation-global-tab data-tabpanel="global"><pre><code class="language-js">let { Sprite, SpriteSheet } = kontra;
-
-let spriteSheet = SpriteSheet({
-  // ...
-  animations: {
-    idle: {
-      frames: 1
-    },
-    walk: {
-      frames: [1,2,3]
-    }
-  }
-});
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  animations: spriteSheet.animations
-});
-
-sprite.playAnimation(&#39;idle&#39;);</code></pre></section>
-  <section role="tabpanel" aria-labelledby=playanimation-es-tab data-tabpanel="es"><pre><code class="language-js">import { Sprite, SpriteSheet } from 'path/to/kontra.mjs';
-
-let spriteSheet = SpriteSheet({
-  // ...
-  animations: {
-    idle: {
-      frames: 1
-    },
-    walk: {
-      frames: [1,2,3]
-    }
-  }
-});
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  animations: spriteSheet.animations
-});
-
-sprite.playAnimation(&#39;idle&#39;);</code></pre></section>
-  <section role="tabpanel" aria-labelledby=playanimation-bundle-tab data-tabpanel="bundle"><pre><code class="language-js">import { Sprite, SpriteSheet } from &#39;kontra&#39;;
-
-let spriteSheet = SpriteSheet({
-  // ...
-  animations: {
-    idle: {
-      frames: 1
-    },
-    walk: {
-      frames: [1,2,3]
-    }
-  }
-});
-
-let sprite = Sprite({
-  x: 100,
-  y: 200,
-  animations: spriteSheet.animations
-});
-
-sprite.playAnimation(&#39;idle&#39;);</code></pre></section>
-</div>
-          <h3 id="title-playAnimation"><span class="visually-hidden">playAnimation</span> Parameters</span></h3>
-          <dl aria-labelledby="title-playAnimation">
-            <dt>
-              <code>name</code>
-              
-            </dt>
-            <dd><p>String. Name of the animation to play.</p>
           </dd>
           </dl>
           
@@ -1912,17 +1385,6 @@ sprite.playAnimation(&#39;idle&#39;);</code></pre></section>
             <dd><p>Number. Time since last update.</p>
           </dd>
           </dl>
-          
-        </section>
-        <section>
-          <h2 id="velocity">
-            <a href="api/sprite#velocity" class="section-link">
-              <span>Sprite&#8203;.velocity</span>
-              <span aria-hidden="true">#</span>
-            </a>
-          </h2>
-
-          <p>The sprites velocity vector.</p>
           
         </section>
         <section>

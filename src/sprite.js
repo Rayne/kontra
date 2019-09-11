@@ -56,20 +56,6 @@ class Sprite {
      */
     this.position = Vector(x, y);
 
-    /**
-     * The sprites velocity vector.
-     * @memberof Sprite
-     * @property {kontra.Vector} velocity
-     */
-    this.velocity = Vector(dx, dy);
-
-    /**
-     * The sprites acceleration vector.
-     * @memberof Sprite
-     * @property {kontra.Vector} acceleration
-     */
-    this.acceleration = Vector(ddx, ddy);
-
     // defaults
 
     // sx = flipX, sy = flipY
@@ -200,42 +186,6 @@ class Sprite {
   }
 
   /**
-   * X coordinate of the velocity vector.
-   * @memberof Sprite
-   * @property {Number} dx
-   */
-  get dx() {
-    return this.velocity.x;
-  }
-
-  /**
-   * Y coordinate of the velocity vector.
-   * @memberof Sprite
-   * @property {Number} dy
-   */
-  get dy() {
-    return this.velocity.y;
-  }
-
-  /**
-   * X coordinate of the acceleration vector.
-   * @memberof Sprite
-   * @property {Number} ddx
-   */
-  get ddx() {
-    return this.acceleration.x;
-  }
-
-  /**
-   * Y coordinate of the acceleration vector.
-   * @memberof Sprite
-   * @property {Number} ddy
-   */
-  get ddy() {
-    return this.acceleration.y;
-  }
-
-  /**
    * An object of [Animations](api/animation) from a kontra.SpriteSheet to animate the sprite. Each animation is named so that it can can be used by name for the sprites [playAnimation()](api/sprite/#playAnimation) function.
    *
    * ```js
@@ -265,9 +215,6 @@ class Sprite {
    * @memberof Sprite
    * @property {Object} animations
    */
-  get animations() {
-    return this._a;
-  }
 
   /**
    * Readonly. X coordinate of where to draw the sprite. Typically the same value as the [position vector](api/sprite#position) unless the sprite has been [added to a tileEngine](api/tileEngine#addObject).
@@ -315,49 +262,6 @@ class Sprite {
   set y(value) {
     this.position.y = value;
   }
-  set dx(value) {
-    this.velocity.x = value;
-  }
-  set dy(value) {
-    this.velocity.y = value;
-  }
-  set ddx(value) {
-    this.acceleration.x = value;
-  }
-  set ddy(value) {
-    this.acceleration.y = value;
-  }
-
-  set animations(value) {
-    let prop, firstAnimation;
-    // a = animations
-    this._a = {};
-
-    // clone each animation so no sprite shares an animation
-    for (prop in value) {
-      this._a[prop] = value[prop].clone();
-
-      // default the current animation to the first one in the list
-      firstAnimation = firstAnimation || this._a[prop];
-    }
-
-    /**
-     * The currently playing Animation object if `animations` was passed as an argument.
-     * @memberof Sprite
-     * @property {kontra.Animation} currentAnimation
-     */
-    this.currentAnimation = firstAnimation;
-    this.width = this.width || firstAnimation.width;
-    this.height = this.height || firstAnimation.height;
-  }
-
-  // readonly
-  set viewX(value) {
-    return;
-  }
-  set viewY(value) {
-    return;
-  }
 
   set width(value) {
     let sign = value < 0 ? -1 : 1;
@@ -373,101 +277,6 @@ class Sprite {
   }
 
   /**
-   * Check if the sprite is alive. Primarily used by kontra.Pool to know when to recycle an object.
-   * @memberof Sprite
-   * @function isAlive
-   *
-   * @returns {Boolean} `true` if the sprites [ttl](api/sprite/#ttl) property is above `0`, `false` otherwise.
-   */
-  isAlive() {
-    return this.ttl > 0;
-  }
-
-  /**
-   * Check if the sprite collide with the object. Uses a simple [Axis-Aligned Bounding Box (AABB) collision check](https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#Axis-Aligned_Bounding_Box). Takes into account the sprites [anchor](api/sprite/#anchor).
-   *
-   * **NOTE:** Does not take into account sprite rotation. If you need collision detection between rotated sprites you will need to implement your own `collidesWith()` function. I suggest looking at the Separate Axis Theorem.
-   *
-   * ```js
-   * import { Sprite } from 'kontra';
-   *
-   * let sprite = Sprite({
-   *   x: 100,
-   *   y: 200,
-   *   width: 20,
-   *   height: 40
-   * });
-   *
-   * let sprite2 = Sprite({
-   *   x: 150,
-   *   y: 200,
-   *   width: 20,
-   *   height: 20
-   * });
-   *
-   * sprite.collidesWith(sprite2);  //=> false
-   *
-   * sprite2.x = 115;
-   *
-   * sprite.collidesWith(sprite2);  //=> true
-   * ```
-   *
-   * If you need a different type of collision check, you can override this function by passing an argument by the same name.
-   *
-   * ```js
-   * // circle collision
-   * function collidesWith(object) {
-   *   let dx = this.x - object.x;
-   *   let dy = this.y - object.y;
-   *   let distance = Math.sqrt(dx * dx + dy * dy);
-   *
-   *   return distance < this.radius + object.radius;
-   * }
-   *
-   * let sprite = Sprite({
-   *   x: 100,
-   *   y: 200,
-   *   radius: 25,
-   *   collidesWith: collidesWith
-   * });
-   *
-   * let sprite2 = Sprite({
-   *   x: 150,
-   *   y: 200,
-   *   radius: 30,
-   *   collidesWith: collidesWith
-   * });
-   *
-   * sprite.collidesWith(sprite2);  //=> true
-   * ```
-   * @memberof Sprite
-   * @function collidesWith
-   *
-   * @param {Object} object - Object to check collision against.
-   *
-   * @returns {Boolean|null} `true` if the objects collide, `false` otherwise. Will return `null` if the either of the two objects are rotated.
-   */
-  collidesWith(object) {
-    if (this.rotation || object.rotation) return null;
-
-    // take into account sprite anchors
-    let x = this.x - this.width * this.anchor.x;
-    let y = this.y - this.height * this.anchor.y;
-
-    let objX = object.x;
-    let objY = object.y;
-    if (object.anchor) {
-      objX -= object.width * object.anchor.x;
-      objY -= object.height * object.anchor.y;
-    }
-
-    return x < objX + object.width &&
-           x + this.width > objX &&
-           y < objY + object.height &&
-           y + this.height > objY;
-  }
-
-  /**
    * Update the sprites position based on its velocity and acceleration. Calls the sprites [advance()](api/sprite/#advance) function.
    * @memberof Sprite
    * @function update
@@ -475,7 +284,6 @@ class Sprite {
    * @param {Number} [dt] - Time since last update.
    */
   update(dt) {
-    this.advance(dt);
   }
 
   /**
@@ -485,93 +293,6 @@ class Sprite {
    */
   render() {
     this.draw();
-  }
-
-  /**
-   * Set the currently playing animation of an animation sprite.
-   *
-   * ```js
-   * import { Sprite, SpriteSheet } from 'kontra';
-   *
-   * let spriteSheet = SpriteSheet({
-   *   // ...
-   *   animations: {
-   *     idle: {
-   *       frames: 1
-   *     },
-   *     walk: {
-   *       frames: [1,2,3]
-   *     }
-   *   }
-   * });
-   *
-   * let sprite = Sprite({
-   *   x: 100,
-   *   y: 200,
-   *   animations: spriteSheet.animations
-   * });
-   *
-   * sprite.playAnimation('idle');
-   * ```
-   * @memberof Sprite
-   * @function playAnimation
-   *
-   * @param {String} name - Name of the animation to play.
-   */
-  playAnimation(name) {
-    this.currentAnimation = this.animations[name];
-
-    if (!this.currentAnimation.loop) {
-      this.currentAnimation.reset();
-    }
-  }
-
-  /**
-   * Move the sprite by its acceleration and velocity. If the sprite is an [animation sprite](api/sprite/#animation-sprite), it also advances the animation every frame.
-   *
-   * If you override the sprites [update()](api/sprite/#update) function with your own update function, you can call this function to move the sprite normally.
-   *
-   * ```js
-   * import { Sprite } from 'kontra';
-   *
-   * let sprite = Sprite({
-   *   x: 100,
-   *   y: 200,
-   *   width: 20,
-   *   height: 40,
-   *   dx: 5,
-   *   dy: 2,
-   *   update: function() {
-   *     // move the sprite normally
-   *     sprite.advance();
-   *
-   *     // change the velocity at the edges of the canvas
-   *     if (this.x < 0 ||
-   *         this.x + this.width > this.context.canvas.width) {
-   *       this.dx = -this.dx;
-   *     }
-   *     if (this.y < 0 ||
-   *         this.y + this.height > this.context.canvas.height) {
-   *       this.dy = -this.dy;
-   *     }
-   *   }
-   * });
-   * ```
-   * @memberof Sprite
-   * @function advance
-   *
-   * @param {Number} [dt] - Time since last update.
-   *
-   */
-  advance(dt) {
-    this.velocity = this.velocity.add(this.acceleration, dt);
-    this.position = this.position.add(this.velocity, dt);
-
-    this.ttl--;
-
-    if (this.currentAnimation) {
-      this.currentAnimation.update(dt);
-    }
   }
 
   /**
@@ -617,36 +338,8 @@ class Sprite {
       this.context.rotate(this.rotation);
     }
 
-    // flip sprite around the center so the x/y position does not change
-    if (this._fx == -1 || this._fy == -1) {
-      let x = this.width / 2 + anchorWidth;
-      let y = this.height / 2 + anchorHeight;
-
-      this.context.translate(x, y);
-      this.context.scale(this._fx, this._fy);
-      this.context.translate(-x, -y);
-    }
-
-    if (this.image) {
-      this.context.drawImage(
-        this.image,
-        0, 0, this.image.width, this.image.height,
-        anchorWidth, anchorHeight, this.width, this.height
-      );
-    }
-    else if (this.currentAnimation) {
-      this.currentAnimation.render({
-        x: anchorWidth,
-        y: anchorHeight,
-        width: this.width,
-        height: this.height,
-        context: this.context
-      });
-    }
-    else {
       this.context.fillStyle = this.color;
       this.context.fillRect(anchorWidth, anchorHeight, this.width, this.height);
-    }
 
     this.context.restore();
   }
